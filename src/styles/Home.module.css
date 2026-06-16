@@ -1,0 +1,33 @@
+/* 
+    Description: This css module applies to Home component.
+    Last updated: 6/12/2026
+*/
+
+.mainContainer {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.title {
+    font-size: 70px;
+    font-family: "Rampart One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: #004A94;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.subTitle {
+    font-size: 25px;
+    font-family: "Imprima", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: #004A94;
+    text-align: center;
+    margin-bottom: 5rem;
+}

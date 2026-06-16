@@ -1,0 +1,266 @@
+@import url('https://fonts.googleapis.com/css2?family=Imprima&family=Rampart+One&display=swap');
+
+/*
+    Description: This stylesheet contains reusable css for components.
+    Last updated: 6/6/2026
+*/
+
+body {
+    margin: 0;
+    min-height: 100vh;
+}
+
+#root {
+    min-height: 100vh;
+    display: flex;
+}
+
+.main-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.main-container-2 {
+    display: flex;
+    flex: 1;
+}
+
+.title-1 {
+    font-size: 70px;
+    font-family: "Rampart One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: #004A94;
+    text-align: center;
+}
+
+.title-2 {
+    font-size: 25px;
+    font-family: "Imprima", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: #004A94;
+    text-align: center;
+}
+
+.title-3 {
+    font-size: 45px;
+    font-family: "Rampart One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: #004A94;
+    text-align: center;
+}
+
+.title-4 {
+    font-size: 18px;
+    font-family: "Imprima", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: black;
+    
+    /*
+    padding: 0.5rem 0rem;
+    margin-bottom: 1rem;*/
+}
+
+.error-message {
+    background-color: #D9EDF8;
+    border-radius: 5px;
+    padding: 1rem;
+    font-size: 18px;
+    font-family: "Imprima", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    color: #004A94;
+    margin-bottom: 1rem;
+}
+
+.form-title {
+    font-size: 20px;
+    font-family: "Imprima", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: #004A94;
+    margin-bottom: 0.2rem;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.form > div  {
+    margin-bottom: 1.3rem;
+}
+
+.form > div input {
+    border: 2px solid #004A94;
+    border-radius: 5px;
+    font-size: 18px;
+    padding: 0.5rem;
+    min-width: 250px;
+}
+
+.form > div input:focus {
+    outline: none;
+}
+
+.fancy-btn {
+    position: relative;
+    display: inline-block;
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    text-decoration: none;
+    outline-offset: 4px;
+}
+
+.light-blue-btn-shadow {
+    position: absolute;
+    inset: 0;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.1);
+    transform: translateY(6px);
+}
+
+.light-blue-btn-edge {
+    position: absolute;
+    inset: 0;
+    border-radius: 5px;
+    background-color: #afd6eb;
+}
+
+.light-blue-btn-front {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 200px;
+    min-height: 50px;
+    border-radius: 5px;
+    transform: translateY(-6px);
+    transition: transform 0.1s ease;
+    font-size: 20px;
+    font-family: "Imprima", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: #004A94;
+    background-color: #D9EDF8;
+}
+
+.small-light-blue-btn-front {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    min-height: 40px;
+    border-radius: 5px;
+    transform: translateY(-6px);
+    transition: transform 0.1s ease;
+    font-size: 20px;
+    font-family: "Imprima", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: #004A94;
+    background-color: #D9EDF8;
+}
+
+.fancy-btn:hover .light-blue-btn-front {
+    transform: translateY(-8px);
+}
+
+.fancy-btn:hover .small-light-blue-btn-front {
+    transform: translateY(-8px);
+}
+
+.fancy-btn:active .light-blue-btn-front {
+    transform: translateY(-2px);
+}
+
+.fancy-btn:active .small-light-blue-btn-front {
+    transform: translateY(-2px);
+}
+
+.fancy-btn:active .light-blue-btn-shadow {
+    transform: translateY(2px);
+}
+
+.dark-blue-btn-shadow {
+    position: absolute;
+    inset: 0;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.2);
+    transform: translateY(6px);
+}
+
+.dark-blue-btn-edge {
+    position: absolute;
+    inset: 0;
+    border-radius: 5px;
+    background-color: #01162b;
+}
+
+.dark-blue-btn-front {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 200px;
+    min-height: 50px;
+    border-radius: 5px;
+    transform: translateY(-6px);
+    transition: transform 0.1s ease;
+    font-size: 20px;
+    font-family: "Imprima", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: white;
+    background-color: #004A94;
+}
+
+.small-dark-blue-btn-front {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    min-height: 40px;
+    border-radius: 5px;
+    transform: translateY(-6px);
+    transition: transform 0.1s ease;
+    font-size: 20px;
+    font-family: "Imprima", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: white;
+    background-color: #004A94;
+}
+
+.fancy-btn:hover .dark-blue-btn-front {
+    transform: translateY(-8px);
+}
+
+.fancy-btn:hover .small-dark-blue-btn-front {
+    transform: translateY(-8px);
+}
+
+.fancy-btn:active .dark-blue-btn-front {
+    transform: translateY(-2px);
+}
+
+.fancy-btn:active .small-dark-blue-btn-front {
+    transform: translateY(-2px);
+}
+
+.fancy-btn:active .dark-blue-btn-shadow {
+    transform: translateY(2px);
+}
