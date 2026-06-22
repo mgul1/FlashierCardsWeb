@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
 import Home from "./components/Home";
 import Signup from "./components/Signup";
+import VerifyEmail from "./components/VerifyEmail";
 import Login from "./components/Login";
 import ForgotPassword from "./components/ForgotPassword";
 import ResetPassword from "./components/ResetPassword";
@@ -19,6 +20,7 @@ function App() {
                 {/* public routes */}
                 <Route path="/" element={<Home />} />
                 <Route path="/signup" element={<Signup />} />
+                <Route path="/verify" element={<VerifyEmail />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/forgotPassword" element={<ForgotPassword />} />
                  <Route path="/resetPassword" element={<ResetPassword />} />
