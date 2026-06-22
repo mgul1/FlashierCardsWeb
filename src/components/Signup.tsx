@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { useState, type ChangeEvent } from "react";
 import UserAuth from "../AuthContext";
+import HomeAnimation from "./HomeAnimation";
+import Tooltip from "@mui/material/Tooltip";
 import styles from "../styles/Account.module.css";
 
 /*
@@ -74,6 +76,7 @@ function Signup() {
 
     return (
         <>
+            <HomeAnimation />
             <div className={styles.mainContainer}>
                 <div className={styles.title}>
                     Join Flashier Cards
@@ -98,15 +101,17 @@ function Signup() {
                             onChange={handleFormData}
                         />
                     </div>
-                    <div>
-                        <div className={styles.formText}>Password</div>
-                        <input
-                            type="password"
-                            name="password"
-                            value={formData.password}
-                            onChange={handleFormData}
-                        />
-                    </div>
+                    <Tooltip title="Password should have 8 characters with at least one uppercase letter, lowercase letter, number, and symbol.">
+                        <div>
+                            <div className={styles.formText}>Password</div>
+                            <input
+                                type="password"
+                                name="password"
+                                value={formData.password}
+                                onChange={handleFormData}
+                            />
+                        </div>
+                    </Tooltip>
                     <div>
                         <div className={styles.formText}>Confirm password</div>
                         <input

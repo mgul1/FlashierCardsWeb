@@ -7,6 +7,12 @@ import Login from "./components/Login";
 import ForgotPassword from "./components/ForgotPassword";
 import ResetPassword from "./components/ResetPassword";
 import Dashboard from "./components/Dashboard";
+import Study from "./components/Study";
+import Edit from "./components/Edit";
+import AccountInformation from "./components/AccountInformation";
+import Theme from "./components/Theme";
+import ChangePassword from "./components/ChangePassword";
+import DeleteAccount from "./components/DeleteAccount";
 
 /*
     Description: This file contains all the public and private routes.
@@ -29,6 +35,12 @@ function App() {
                 {/* private routes */}
                 <Route element={<PrivateRoute />}>
                     <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/dashboard/study/:deckId" element={<Study />} />
+                    <Route path="/dashboard/edit/:deckId" element={<Edit />} />
+                    <Route path="/profile/accountInformation" element={<AccountInformation />} />
+                    <Route path="/profile/theme" element={<Theme />} />
+                    <Route path="/profile/changePassword" element={<ChangePassword />} />
+                    <Route path="/profile/deleteAccount" element={<DeleteAccount />} />
                 </Route>
             </Routes>
         </BrowserRouter>

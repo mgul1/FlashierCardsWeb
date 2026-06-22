@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import UserAuth from "../AuthContext";
 import styles from "../styles/Home.module.css";
+import HomeAnimation from "./HomeAnimation";
 
 /*
     Description: This component is the home page that leads to signup and login.
@@ -24,6 +25,7 @@ function Home() {
     
     return (
         <>
+            <HomeAnimation />
             <div className={styles.mainContainer}>
                 <div className={styles.title}>
                     Flashier Cards

@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState, type ChangeEvent } from "react";
 import UserAuth from "../AuthContext";
 import styles from "../styles/Account.module.css";
+import HomeAnimation from "./HomeAnimation";
 
 /*
     Description: This component is the login page for a user to access their account.
@@ -65,6 +66,7 @@ function Login() {
 
     return (
         <>
+            <HomeAnimation />
             <div className={styles.mainContainer}>
                 <div className={styles.title}>
                     Flashier Cards

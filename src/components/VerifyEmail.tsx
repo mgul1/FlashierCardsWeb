@@ -33,13 +33,14 @@ function VerifyEmail() {
                     animation: 1
                 })
             });
-            
-            // expect a message in string format
-            const data = await response.json();
 
             if (!response.ok) {
-                throw new Error(data);
+                const error = await response.json();
+                throw new Error(error.message);
             }
+
+            const data = await response.json();
+            console.log(data);
 
         } catch (error: any) {
             setError({ status: true, message: error.message });
