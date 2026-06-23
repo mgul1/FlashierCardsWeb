@@ -92,10 +92,10 @@ function Dashboard() {
         setLoading(true);
 
         try {
-            /*
-            const userId = session.user.id;
+
+            //const userId = session.user.id;
             // get list of decks
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/user/${userId}/decks`, {
+            const response = await fetch(`${import.meta.env.VITE_FLASHIER_CARDS_API}/api/deck`, {
                 method: "GET",
                 headers: {
                     "Authorization": `Bearer ${session.access_token}`
@@ -109,7 +109,7 @@ function Dashboard() {
                 throw new Error(data.message);
             }
 
-            setDecks(data);*/
+            setDecks(data);
             setLoading(false);
 
         } catch(error: any) {
@@ -141,11 +141,11 @@ function Dashboard() {
         setLoading(true);
 
         try {
-            /*
-            const userId = session.user.id;
+            
+            // const userId = session.user.id;
 
             // create a deck in supabase
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/user/${userId}/createDeck`, {
+            const response = await fetch(`${import.meta.env.VITE_FLASHIER_CARDS_API}/api/deck`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -164,36 +164,44 @@ function Dashboard() {
             }
 
             // create a doc in mongodb
-            const docResponse = await fetch(`${import.meta.env.VITE_API_URL}/user/${userId}/deck/${data.deckDto.id}/createCards`, {
+
+   const docResponse = await fetch(`${import.meta.env.VITE_FLASHIER_CARDS_API}/api/deck/${data.id}/create`, {
+
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${session.access_token}`
                 },
                 body: JSON.stringify({
-                    "userId": userId,
-                    "deckId": data.deckDto.id,
-                    "frontCards": [{"text": [], "gif": [], "sticker": []}],
-                    "backCards": [{"text": [], "gif": [], "sticker": []}]
+                    front_card: {
+                        deck_id: data.id,
+                        card_num: 1,
+                        card_side: "front"
+                        },
+                    back_card: {
+                        deck_id: data.id,
+                        card_num: 1,
+                        card_side: "back"
+                    }
                 })
             });
-
+            
             // get message and doc data
             const docData = await docResponse.json();
 
             if (!docResponse.ok) {
-                throw new Error(docData.message);
+                throw new Error(docData?.message || "Failed to create card content");
             }
 
-            setDecks(prev => [...prev, data.deckDto]);*/
+            setDecks(prev => [...prev, data.deckDto]); 
 
         } catch(error: any) {
             setError({ status: true, message: error.message });
 
         } finally {
             setLoading(false);
-        }
-    }
+        } 
+    } 
 
     const submitRenameForm = async (e: any) => {
         e.preventDefault();
@@ -202,11 +210,10 @@ function Dashboard() {
         setLoading(true);
 
         try {
-            /*
-            const userId = session.user.id;
+           // const userId = session.user.id;
 
             // rename a deck
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/user/${userId}/deck/${deckId}/renameDeck`, {
+            const response = await fetch(`${import.meta.env.VITE_FLASHIER_CARDS_API}/api/deck/${deckId}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -229,7 +236,7 @@ function Dashboard() {
                 prev.map(deck => 
                     deck.id === data.deckDto.id ? data.deckDto : deck
                 )
-            );*/
+            );
             
 
         } catch(error: any) {
@@ -245,11 +252,9 @@ function Dashboard() {
         setLoading(true);
 
         try {
-            /*
-            const userId = session.user.id;
-
+        
             // delete a deck in supabase
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/user/${userId}/deck/${deckId}/deleteDeck`, {
+            const response = await fetch(`${import.meta.env.VITE_FLASHIER_CARDS_API}/api/deck/${deckId}`, {
                 method: "DELETE",
                 headers: {
                     "Authorization": `Bearer ${session.access_token}`
@@ -264,7 +269,7 @@ function Dashboard() {
             }
 
             // delete a doc in mongodb
-            const docResponse = await fetch(`${import.meta.env.VITE_API_URL}/user/${userId}/deck/${deckId}/deleteCards`, {
+         /*   const docResponse = await fetch(`${import.meta.env.VITE_FLASHIER_CARDS_API}/deck/${deckId}/deleteCards`, {
                 method: "DELETE",
                 headers: {
                     "Authorization": `Bearer ${session.access_token}`
@@ -276,10 +281,10 @@ function Dashboard() {
 
             if (!response.ok) {
                 throw new Error(docData.message);
-            }
+            } */
 
             // update deck list
-            setDecks(prev => prev.filter(deck => deck.id !== deckId));*/
+        setDecks(prev => prev.filter(deck => deck.id !== deckId)); 
         } catch(error: any) {
             setError({ status: true, message: error.message });
 
