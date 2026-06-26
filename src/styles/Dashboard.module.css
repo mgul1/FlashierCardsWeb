@@ -16,16 +16,6 @@
     position: relative;
 }
 
-.appTitle {
-    font-size: 45px;
-    font-family: "Rampart One", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    color: #004A94;
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
 /* css for toolbar below */
 
 .toolbar {
@@ -157,10 +147,6 @@
     justify-content: center;
 }
 
-.form > div {
-    margin-bottom: 1.3rem;
-}
-
 .formText {
     font-size: 20px;
     font-family: "Imprima", sans-serif;
@@ -168,6 +154,10 @@
     font-style: normal;
     color: #004A94;
     margin-bottom: 0.2rem;
+}
+
+.form > div {
+    margin-bottom: 1.3rem;
 }
 
 .form > div input {
@@ -180,75 +170,4 @@
 
 .form > div input:focus {
     outline: none;
-}
-
-.fancyBtn {
-    position: relative;
-    display: inline-block;
-    background: transparent;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    text-decoration: none;
-    outline-offset: 4px;
-    margin-top: 0.5rem;
-}
-
-.darkBlueBtnShadow {
-    position: absolute;
-    inset: 0;
-    border-radius: 5px;
-    background: rgba(0, 0, 0, 0.2);
-    transform: translateY(6px);
-}
-
-.darkBlueBtnEdge {
-    position: absolute;
-    inset: 0;
-    border-radius: 5px;
-    background-color: #01162b;
-}
-
-.darkBlueBtnFront {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 150px;
-    min-height: 50px;
-    border-radius: 5px;
-    transform: translateY(-6px);
-    transition: transform 0.1s ease;
-    font-size: 20px;
-    font-family: "Imprima", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    color: white;
-    background-color: #004A94;
-}
-
-.fancyBtn:hover .darkBlueBtnFront {
-    transform: translateY(-8px);
-}
-
-.fancyBtn:active .darkBlueBtnFront {
-    transform: translateY(-2px);
-}
-
-.fancyBtn:active .darkBlueBtnShadow {
-    transform: translateY(2px);
-}
-
-/* message css below */
-
-.errorMessage {
-    background-color: #D9EDF8;
-    border-radius: 5px;
-    padding: 1rem;
-    font-size: 18px;
-    font-family: "Imprima", sans-serif;
-    font-weight: 600;
-    font-style: normal;
-    color: #004A94;
-    margin-bottom: 1rem;
 }

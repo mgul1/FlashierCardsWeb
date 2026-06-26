@@ -199,7 +199,7 @@ function Dashboard() {
             <div className={styles.mainContainer} style={{ pointerEvents: createOverlay || renameOverlay ? "none" : "auto" }}>
                 <Navbar />
                 <div className={styles.subContainer}>
-                    <div className={styles.appTitle}>
+                    <div className={"app-title"}>
                         Flashier Cards
                     </div>
                     <div className={styles.toolbar}>
@@ -288,12 +288,12 @@ function Dashboard() {
                         </Tooltip>
                     </div>
                     { (loading) ?
-                        <div className={styles.errorMessage}>
+                        <div className={"error-message"}>
                             Loading request...
                         </div>
                     :
                         (error.status) ?
-                            <div className={styles.errorMessage}>{error.message}</div>
+                            <div className={"error-message"}>{error.message}</div>
                         :
                             <></>
                     }
@@ -333,11 +333,11 @@ function Dashboard() {
                             </div>
                             <button
                                 type="submit"
-                                className={styles.fancyBtn}
+                                className={"fancy-btn"}
                             >
-                                <span className={styles.darkBlueBtnShadow}></span>
-                                <span className={styles.darkBlueBtnEdge}></span>
-                                <span className={styles.darkBlueBtnFront}>Create deck</span>
+                                <span className={"dark-blue-btn-shadow"}></span>
+                                <span className={"dark-blue-btn-edge"}></span>
+                                <span className={"dark-blue-btn-front"} style={{ minWidth: "150px"}}>Create deck</span>
                             </button>
                         </form>
                     </div>
@@ -363,11 +363,11 @@ function Dashboard() {
                             </div>
                             <button
                                 type="submit"
-                                className={styles.fancyBtn}
+                                className={"fancy-btn"}
                             >
-                                <span className={styles.darkBlueBtnShadow}></span>
-                                <span className={styles.darkBlueBtnEdge}></span>
-                                <span className={styles.darkBlueBtnFront}>Rename deck</span>
+                                <span className={"dark-blue-btn-shadow"}></span>
+                                <span className={"dark-blue-btn-edge"}></span>
+                                <span className={"dark-blue-btn-front"} style={{ minWidth: "150px"}}>Rename deck</span>
                             </button>
                         </form>
                     </div>
