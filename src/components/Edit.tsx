@@ -49,8 +49,8 @@ function Edit() {
     const { deckId } = useParams();
     const { session } = UserAuth();
 
-    // session.access_token
-    // session.user.id
+    session.access_token
+    session.user.id
 
     // text side panel related variables
     const [textPanel, setTextPanel] = useState(false);
@@ -475,18 +475,19 @@ function Edit() {
         } finally {
             setLoading(false);
         }
+        
     }
 
     const fetchDeckData = async () => {
         setLoading(true);
 
         try {
-            /*
+            
             // get deck data from supabase
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/user/${userId}/deck/${deckId}`, {
+            const response = await fetch(`${import.meta.env.VITE_FLASHIER_CARDS_API}/api/deck/${deckId}/content`, {
                 method: "GET",
                 headers: {
-                    "Authorization": `Bearer ${token}`
+                    "Authorization": `Bearer ${session.access_token}`
                 }
             });
 
@@ -498,7 +499,7 @@ function Edit() {
             }
 
             // get card content from mongodb
-            const docResponse = await fetch(`${import.meta.env.VITE_API_URL}/user/${userId}/deck/${deckId}/cards`, {
+           /* const docResponse = await fetch(`${import.meta.env.VITE_FLASHIER_CARDS_API}/api/deck/${deckId}/content`, {
                 method: "GET",
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -511,12 +512,13 @@ function Edit() {
             if (!docResponse.ok) {
                 throw new Error(docData.message);
             }
-
+            */
             // set deck name content to display
-            setDeckName(data.name);
-            setFrontCards(docData.frontCards);
-            setBackCards(docData.backCards);
-            setTotal(docData.frontCards.length);*/
+            // setDeckName(data.name);
+            setFrontCards(data.front_cards);
+            setBackCards(data.back_cards);
+            setTotal(data.front_cards.length);
+            console.log(data);
 
         } catch(error: any) {
             setError({ status: true, message: error.message });
