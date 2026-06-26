@@ -12,6 +12,7 @@
     flex-direction: column;
     justify-content: center;
     gap: 10px;
+    pointer-events: none;
 }
 
 .homeAnimation .shape {

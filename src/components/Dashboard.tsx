@@ -2,13 +2,12 @@ import Navbar from "./Navbar";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark, faPlus, faFolderOpen, faPencil, faICursor, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { FaCircle, FaSquare, FaStar } from "react-icons/fa";
-import { useEffect, useMemo, useState, type ChangeEvent } from 'react';
+import { useEffect, useState, type ChangeEvent } from 'react';
 import type Deck from "../interfaces/Deck";
 import styles from "../styles/Dashboard.module.css";
 import UserAuth from "../AuthContext";
-import { animate } from "animejs";
 import Tooltip from "@mui/material/Tooltip";
+import DashboardAnimation from "./DashboardAnimation";
 
 function Dashboard() {
     const navigate = useNavigate();
@@ -21,21 +20,7 @@ function Dashboard() {
     const [deckName, setDeckName] = useState("");
     const [deckId, setDeckId] = useState<null | number>(null);
     const [decks, setDecks] = useState<Deck[]>([]);
-
-    const shapes = [
-        ...Array(6).fill(FaCircle),
-        ...Array(6).fill(FaSquare),
-        ...Array(6).fill(FaStar)
-    ];
-
-    const shapesStyle = useMemo(() => {
-        return shapes.map((_, index) => ({
-            left: `${Math.random() * 95}%`,
-            color: ["#004A94", "#FFD166", "#EF476F", "#06D6A0"][index % 4],
-            fontSize: `${Math.random() * 25 + 25}px`
-        }));
-    }, []);
-
+    
     function handleFormData(e: ChangeEvent<HTMLInputElement>) {
         setDeckName(e.target.value);
     }
@@ -162,7 +147,7 @@ function Dashboard() {
             const data = await response.json();
             if (!response.ok) throw new Error(data.message);
 
-            // update deck name in decks array
+            // update deck decks array
             setDecks(prevDecks => 
                 prevDecks.map(deck => 
                     deck.id === data[0].id ? data[0] : deck
@@ -205,22 +190,12 @@ function Dashboard() {
     };
 
     useEffect(() => {
-        animate(`.${styles.floatingShapes}`, {
-            translateY: ["100vh", "-120vh"],
-            translateX: () => `${Math.random() * 120 - 60}px`,
-            rotate: () => Math.random() * 360,
-            opacity: [0, 0.45, 0],
-            scale: () => Math.random() * 0.6 + 0.6,
-            duration: () => Math.random() * 6000 + 9000,
-            loopDelay: 0,
-            loop: true,
-            ease: "linear",
-        });
         fetchDeckData();
     }, []);
-
+    
     return (
         <>
+            <DashboardAnimation />
             <div className={styles.mainContainer} style={{ pointerEvents: createOverlay || renameOverlay ? "none" : "auto" }}>
                 <Navbar />
                 <div className={styles.subContainer}>

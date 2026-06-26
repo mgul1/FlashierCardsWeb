@@ -127,7 +127,7 @@
 .overlay {
     display: flex;
     flex-direction: column;
-    top: 40%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     position: absolute;
@@ -157,7 +157,7 @@
     justify-content: center;
 }
 
-.form > div  {
+.form > div {
     margin-bottom: 1.3rem;
 }
 
@@ -191,7 +191,6 @@
     cursor: pointer;
     text-decoration: none;
     outline-offset: 4px;
-    margin-top: 0.5rem;
 }
 
 .darkBlueBtnShadow {
@@ -214,7 +213,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    min-width: 160px;
+    min-width: 150px;
     min-height: 50px;
     border-radius: 5px;
     transform: translateY(-6px);
@@ -239,22 +238,7 @@
     transform: translateY(2px);
 }
 
-/* background animation css below */
-
-.floatingBackground {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    pointer-events: none;
-    z-index: 0;
-    display: flex;
-    flex-direction: column;
-}
-
-.floatingShapes {
-    position: absolute;
-    bottom: -80px;
-}
+/* message css below */
 
 .errorMessage {
     background-color: #D9EDF8;

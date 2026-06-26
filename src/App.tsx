@@ -29,7 +29,7 @@ function App() {
                 <Route path="/verify" element={<VerifyEmail />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/forgotPassword" element={<ForgotPassword />} />
-                 <Route path="/resetPassword" element={<ResetPassword />} />
+                <Route path="/resetPassword" element={<ResetPassword />} />
                 <Route path="*" element={<Navigate to="/"/>} />
                 
                 {/* private routes */}
