@@ -191,6 +191,7 @@
     cursor: pointer;
     text-decoration: none;
     outline-offset: 4px;
+    margin-top: 0.5rem;
 }
 
 .darkBlueBtnShadow {
