@@ -488,9 +488,6 @@ function Edit() {
         try {
             // get specific deck from Supabase
             const response = await fetch(`${import.meta.env.VITE_FLASHIER_CARDS_API}/api/deck/${deckId}`, {
-            
-            // get deck data from supabase
-            const response = await fetch(`${import.meta.env.VITE_FLASHIER_CARDS_API}/api/deck/${deckId}/content`, {
                 method: "GET",
                 headers: {
                     "Authorization": `Bearer ${session.access_token}`
@@ -515,7 +512,13 @@ function Edit() {
         setLoading(true);
 
         try {
-            setFrontCards([{}])
+            const response = await fetch(`${import.meta.env.VITE_FLASHIER_CARDS_API}/api/deck/${deckId}/content`, {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${session.access_token}`
+                }
+            });
+            //setFrontCards([{}])
             /*
             // get specific deck from Supabase
             const response = await fetch(`${import.meta.env.VITE_FLASHIER_CARDS_API}/api/deck/${deckId}`, {
@@ -547,7 +550,7 @@ function Edit() {
             setFrontCards(docData.frontCards);
             setBackCards(docData.backCards);
             setTotal(docData.frontCards.length);*/
-            */
+         
             // set deck name content to display
             // setDeckName(data.name);
             setFrontCards(data.front_cards);
