@@ -12,8 +12,8 @@ function Study() {
     const [loading, setLoading] = useState(false);
     const [deckName, setDeckName] = useState();
     const { deckId } = useParams();
-    const [frontCards, setFrontCards] = useState<Card[]>([{text: [], gif: [], sticker: []}]);
-    const [backCards, setBackCards] = useState<Card[]>([{text: [], gif: [], sticker: []}]);
+    const [frontCards, setFrontCards] = useState<Card[]>([]);
+    const [backCards, setBackCards] = useState<Card[]>([]);
     const cardRef = useRef<HTMLDivElement>(null);
     const [cardSide, setCardSide] = useState("Front");
     const [cardNum, setCardNum] = useState(1);
@@ -144,39 +144,40 @@ function Study() {
     }
 
     useEffect(() => {
-        fetchDeckData();
-        fetchCardContent();
-        fetchProfileData();
+      //  fetchDeckData();
+     //   fetchCardContent();
+      //  fetchProfileData();
     }, []);
 
     return (
         <div className={styles.main}>
             <div className={`${styles.background} ${styles[animation]}`} />
-            <div className={styles.dashboardContent}>
+            <div className={styles.mainContainer}>
                 <Navbar />
-                <div>
-                    <div className={styles.title}>{deckName || "Flashier Cards"}</div>
+                <div className={styles.subContainer}>
+                    <div className={"app-title"}>{deckName || "Flashier Cards"}</div>
                     { (loading) ?
-                        <div className={styles.invalidRequest}>
+                        <div className={"error-message"}>
                             Loading request...
                         </div>
                     :
                         (error.status) ?
-                            <div className={styles.invalidRequest}>{error.message}</div>
+                            <div className={"error-message"}>{error.message}</div>
                         :
-                            <div></div>
+                            <></>
                     }
                     <div className={styles.deck}>
                         <div className={styles.card} onClick={() => flipCard()} ref={cardRef}>
                             <div className={styles.cardInner}>
                                 <div className={styles.cardFront}>
+                                    {/* 
                                     {frontCards[cardNum - 1].text.map((text, textId) =>
                                         <div 
                                             key={textId}
                                             style={{
                                                 width: text.width + "px",
                                                 color: text.color,
-                                                fontSize: text.fontSize,
+                                               // fontSize: text.fontSize,
                                                 fontFamily: "Imprima, sans-serif",
                                                 position: "absolute",
                                                 left: text.x + "px",
@@ -213,16 +214,17 @@ function Study() {
                                                 top: sticker.y + "px"
                                             }}
                                         />
-                                    )}
+                                    )}*/}
                                 </div>
                                 <div className={styles.cardBack}>
+                                    {/* 
                                     {backCards[cardNum - 1].text.map((text, textId) =>
                                         <div
                                             key={textId}
                                             style={{
                                                 width: text.width + "px",
                                                 color: text.color,
-                                                fontSize: text.fontSize,
+                                               // fontSize: text.fontSize,
                                                 fontFamily: "Imprima, sans-serif",
                                                 position: "absolute",
                                                 left: text.x + "px",
@@ -259,7 +261,7 @@ function Study() {
                                                 top: sticker.y + "px"
                                             }}
                                         />
-                                    )}
+                                    )}*/}
                                 </div>
                             </div>
                         </div>

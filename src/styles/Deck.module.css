@@ -1,25 +1,85 @@
-.dashboardContent {
-    display: flex;
-    flex-direction: row;
-    position: relative;
-}
+/* 
+    Description: This css module applies to Edit and Study components.
+    Last updated: 6/27/2026
+*/
 
-.dashboardContent > div:last-of-type {
+.mainContainer {
     display: flex;
     flex: 1;
-    flex-direction: column;
-    padding: 2rem 1rem;
 }
 
-.title {
-    font-size: 45px;
-    font-family: "Rampart One", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    color: #004A94;
-    text-align: center;
-    margin-bottom: 2rem;
+.subContainer {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
 }
+
+/* css for edit toolbar below */
+
+.toolbar {
+    display: flex;
+    gap: 15px;
+    padding: 1rem;
+    border-radius: 5px;
+    background-color: #D9EDF8;
+    margin-bottom: 1.5rem;
+}
+
+.toolOption {
+    position: relative;
+    display: inline-block;
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    text-decoration: none;
+    outline-offset: 4px;
+}
+
+.toolOption .shadow {
+    position: absolute;
+    inset: 0;
+    border-radius: 14px;
+    background: rgba(0, 0, 0, 0.2);
+    transform: translateY(6px);
+}
+
+.toolOption .edge {
+    position: absolute;
+    inset: 0;
+    border-radius: 14px;
+    background-color: #296b8e;
+}
+
+.toolOption .front {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    border-radius: 14px;
+    transform: translateY(-6px);
+    transition: transform 0.1s ease;
+    font-size: 22px;
+    color: white;
+    background-color: #afd6eb;
+}
+
+.toolOption:hover .front {
+    transform: translateY(-8px);
+}
+
+.toolOption:active .front {
+    transform: translateY(-2px);
+}
+
+.toolOption:active .shadow {
+    transform: translateY(2px);
+}
+
+/* css for side panels below */
 
 .panel {
     display: flex;
@@ -223,79 +283,7 @@
     cursor: auto;
 }
 
-.toolbar {
-    margin-bottom: 1.5rem;
-    display: flex;
-    gap: 15px;
-    padding: 1rem;
-    border-radius: 5px;
-    background-color: #D9EDF8;
-}
-
-.toolOption {
-    position: relative;
-    display: inline-block;
-    background: transparent;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    text-decoration: none;
-    outline-offset: 4px;
-}
-
-.shadow {
-    position: absolute;
-    inset: 0;
-    border-radius: 14px;
-    background: rgba(0, 0, 0, 0.2);
-    transform: translateY(6px);
-}
-
-.edge {
-    position: absolute;
-    inset: 0;
-    border-radius: 14px;
-    background-color: #296b8e;
-}
-
-.front {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 45px;
-    height: 45px;
-    border-radius: 14px;
-    transform: translateY(-6px);
-    transition: transform 0.1s ease;
-    font-size: 22px;
-    color: white;
-    background-color: #afd6eb;
-}
-
-.toolOption:hover .front {
-    transform: translateY(-8px);
-}
-
-.toolOption:active .front {
-    transform: translateY(-2px);
-}
-
-.toolOption:active .shadow {
-    transform: translateY(2px);
-}
-
-.invalidRequest {
-    color: #004A94;
-    font-size: 18px;
-    font-family: "Imprima", sans-serif;
-    font-style: normal;
-    margin-bottom: 1rem;
-    font-weight: 600;
-    background-color: #D9EDF8;
-    border-radius: 5px;
-    padding: 1rem;
-}
+/* css for study animations below */
 
 .background {
     position: absolute;
