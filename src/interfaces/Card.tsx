@@ -1,34 +1,13 @@
+import type Text from "./Text";
+import type Gif from "./Gif";
+import type Sticker from "./Sticker";
+
 export default interface Card {
-    id: number | null,
-    deck_id: number | null,
+    id: number,
+    deck_id: number,
     card_num: number,
     card_side: string,
-    text: {
-        id: number | null,
-        card_id: number,
-        input: string,
-        width: number,
-        font_size: number,
-        color: string,
-        x: number,
-        y: number
-    }[],
-    gif: {
-        id: number | null,
-        card_id: number,
-        url: string,
-        width: number,
-        height: number,
-        x: number,
-        y: number
-    }[],
-    sticker: {
-        id: number | null,
-        card_id: number,
-        url: string,
-        width: number,
-        height: number,
-        x: number,
-        y: number
-    }[]
+    text: Text[],
+    gif: Gif[],
+    sticker: Sticker[]
 }
