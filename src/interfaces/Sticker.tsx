@@ -1,6 +1,6 @@
 export default interface Sticker {
-    id: number,
-    card_id: number,
+    id: number | null,
+    card_id: number | null,
     url: string,
     width: number,
     height: number,

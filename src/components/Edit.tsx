@@ -19,13 +19,18 @@ import GiphyLogo from "../assets/giphyLogo.png";
 import Tooltip from "@mui/material/Tooltip";
 import type Card from "../interfaces/Card";
 
+/*
+    Description: This component allows the user create, update, or delete deck content.
+    Last updated: 6/28/2026
+*/
+
 type Giphy = {
     id: string;
     title: string;
     url: string;
 };
 
-function Giphy({newImage, onDblClick, onDragEnd}: any) {
+function Giphy({ newImage, onDblClick, onDragEnd }: any) {
     const [image] = useImage(newImage.url);
     return (
         <Image
@@ -53,437 +58,32 @@ function Edit() {
     const [frontCards, setFrontCards] = useState<Card[]>([]);
     const [backCards, setBackCards] = useState<Card[]>([]);
 
-    // text side panel related variables
-    const [textPanel, setTextPanel] = useState(false);
-    const [textArea, setTextArea] = useState(false);
-    const [text, setText] = useState("");
-    const [textIndex, setTextIndex] = useState(0);
-
     // card related variables
     const cardRef = useRef<HTMLDivElement>(null);
     const [cardSide, setCardSide] = useState("Front");
     const [cardNum, setCardNum] = useState(1);
     const [total, setTotal] = useState(1);
-        // initialize with initial card content
 
-
-    // giphs and stickers related variables
-    const [query, setQuery] = useState("");
-    const [gifResults, setGifsResults] = useState<Giphy[]>([]);
-    const [stickerResults, setStickerResults] = useState<Giphy[]>([]);
-    const [giphSelected, setGiphSelected] = useState(false);
-    const [stickerSelected, setStickerSelected] = useState(false);
+    // side panel related variables
+    const [textPanel, setTextPanel] = useState(false);
     const [gifPanel, setGifPanel] = useState(false);
     const [stickerPanel, setStickerPanel] = useState(false);
-    const [gifIndex, setGifIndex] = useState(0);
-    const [stickerIndex, setStickerIndex] = useState(0);
 
-    const fetchGiphs = async (e: any) => {
-        e.preventDefault();
-        setLoading(true);
-        setQuery("");
-
-        try {
-            /*
-            const response = await fetch(`https://api.giphy.com/v1/gifs/search?api_key=${import.meta.env.VITE_GIPHY_API_KEY}&q=${query.trim()}&limit=12&rating=g`);
-
-            // get gifs related data
-            const data = await response.json();
-
-            if (!response.ok) {
-                throw new Error(data.message || "Sorry, we could not get the gifs.");
-            }
-
-            // get the urls
-            const gifs = data.data.map((item: any) => ({
-                id: item.id,
-                title: item.title,
-                url: item.images.original.url
-            }));
-
-            setGifsResults(gifs);*/
-
-        } catch(error: any) {
-            setError({ status: true, message: error.message || "Sorry, we could not get the gifs." });
-        
-        } finally {
-            setLoading(false);
-        }
-    }
-
-    const fetchStickers = async (e: any) =>  {
-        console.log("hello world");
-        e.preventDefault();
-        setLoading(true);
-        setQuery("");
-
-        try {
-            /*
-            const response = await fetch(`https://api.giphy.com/v1/stickers/search?api_key=${import.meta.env.VITE_GIPHY_API_KEY}&q=${query.trim()}&limit=12&rating=g`);
-
-            // get stickers related data
-            const data = await response.json();
-
-            if (!response.ok) {
-                throw new Error(data.message || "Sorry, we could not get the stickers.");
-            }
-
-            // get the urls
-            const stickers = data.data.map((item: any) => ({
-                id: item.id,
-                title: item.title,
-                url: item.images.original_still.url
-            }));
-
-            setStickerResults(stickers);*/
-
-        } catch(error: any) {
-            setError({ status: true, message: error.message || "Sorry, we could not get the stickers." });
-        } finally {
-            setLoading(false);
-        }
-    }
-
-    /*
-    function createSticker(stickerUrl: string) {
-        let stickerTmp = { id: null, card_id: null, url: stickerUrl, width: 100, height: 100, x: 20, y: 20 };
-        if (cardSide == "Front") {
-            setFrontCards(prev =>
-                prev.map((card, index) =>
-                    index === (cardNum - 1) ? {...card, sticker: [...card.sticker, stickerTmp]} : card
-                )
-            );
-        } else if (cardSide === "Back") {
-            setBackCards(prev =>
-                prev.map((card, index) =>
-                    index === (cardNum - 1) ? {...card, sticker: [...card.sticker, stickerTmp]} : card
-                )
-            );
-        }
-    }*/
-
-    /*
-    function createGif(gifUrl: string) {
-        let gifTmp = { id: null, card_id: null, url: gifUrl, width: 150, height: 150, x: 50, y: 50 };
-        if (cardSide == "Front") {
-            setFrontCards(prev =>
-                prev.map((card, index) =>
-                    index === (cardNum - 1) ? {...card, gif: [...card.gif, gifTmp]} : card
-                )
-            );
-        } else if (cardSide === "Back") {
-            setBackCards(prev =>
-                prev.map((card, index) =>
-                    index === (cardNum - 1) ? {...card, gif: [...card.gif, gifTmp]} : card
-                )
-            );
-        }
-    }*/
-
-    function changeTextColor(color: string) {
-        if (cardSide === "Front") {
-            setFrontCards(prev =>
-                prev.map((card, index) =>
-                    index === (cardNum - 1) ? {...card, text: card.text.map((cardText, i) =>
-                        i === textIndex ? {...cardText, color: color} : cardText
-                    )} : card
-                )
-            );
-        } else if (cardSide == "Back") {
-            setBackCards(prev =>
-                prev.map((card, index) =>
-                    index === (cardNum - 1) ? {...card, text: card.text.map((cardText, i) =>
-                        i === textIndex ? {...cardText, color: color} : cardText
-                    )} : card
-                )
-            );
-        }
-    }
-
-    /*
-    function createSmallText() {
-        let textTmp = {input: "Double click to edit text", width: 300, x: 30, y: 30, fontSize: 18, color: "#201002"};
-        if (cardSide == "Front") {
-            setFrontCards(prev =>
-                prev.map((card, index) =>
-                    index === (cardNum - 1) ? {...card, text: [...card.text, textTmp]} : card
-                )
-            );
-        } else if (cardSide === "Back") {
-            setBackCards(prev =>
-                prev.map((card, index) =>
-                    index === (cardNum - 1) ? {...card, text: [...card.text, textTmp]} : card
-                )
-            );
-        }
-    }*/
-
-    /*
-    function createMediumText() {
-        let textTmp = {input: "Double click to edit text", width: 400, x: 30, y: 30, fontSize: 28, color: "#201002"};
-        if (cardSide == "Front") {
-            setFrontCards(prev =>
-                prev.map((card, index) =>
-                    index === (cardNum - 1) ? {...card, text: [...card.text, textTmp]} : card
-                )
-            );
-        } else if (cardSide === "Back") {
-            setBackCards(prev =>
-                prev.map((card, index) =>
-                    index === (cardNum - 1) ? {...card, text: [...card.text, textTmp]} : card
-                )
-            );
-        }
-    }*/
-
-        /*
-    function createLargeText() {
-        let textTmp = { id: null, card_id: null, input: "Double click to edit text", width: 600, x: 30, y: 30, fontSize: 38, color: "#201002"};
-        if (cardSide == "Front") {
-            setFrontCards(prev =>
-                prev.map((card, index) =>
-                    index === (cardNum - 1) ? {...card, text: [...card.text, textTmp]} : card
-                )
-            );
-        } else if (cardSide === "Back") {
-            setBackCards(prev =>
-                prev.map((card, index) =>
-                    index === (cardNum - 1) ? {...card, text: [...card.text, textTmp]} : card
-                )
-            );
-        }
-    }*/
-
-    function deleteText() {
-        if (cardSide === "Front") {
-            setFrontCards(prev =>
-                prev.map((card, index) =>
-                    index === (cardNum - 1) ? {...card, text: card.text.filter((_, index) =>
-                        index != textIndex
-                    )} : card
-                )
-            );
-        } else if (cardSide == "Back") {
-            setBackCards(prev =>
-                prev.map((card, index) =>
-                    index === (cardNum - 1) ? {...card, text: card.text.filter((_, index) =>
-                        index != textIndex
-                    )} : card
-                )
-            );
-        }
-        setTextArea(false);
-    }
-
-    function deleteGiphy(giphyType: string) {
-        if (giphyType == "gif") {
-            if (cardSide === "Front") {
-                setFrontCards(prev =>
-                    prev.map((card, index) =>
-                        index === (cardNum - 1) ? {...card, gif: card.gif.filter((_, index) =>
-                            index != gifIndex
-                        )} : card
-                    )
-                );
-            } else if (cardSide == "Back") {
-                setBackCards(prev =>
-                    prev.map((card, index) =>
-                        index === (cardNum - 1) ? {...card, gif: card.gif.filter((_, index) =>
-                            index != gifIndex
-                        )} : card
-                    )
-                );
-            }
-            showGiphArea(false, 0);
-        } else if (giphyType == "sticker") {
-            if (cardSide === "Front") {
-                setFrontCards(prev =>
-                    prev.map((card, index) =>
-                        index === (cardNum - 1) ? {...card, sticker: card.sticker.filter((_, index) =>
-                            index != stickerIndex
-                        )} : card
-                    )
-                );
-            } else if (cardSide == "Back") {
-                setBackCards(prev =>
-                    prev.map((card, index) =>
-                        index === (cardNum - 1) ? {...card, sticker: card.sticker.filter((_, index) =>
-                            index != stickerIndex
-                        )} : card
-                    )
-                );
-            }
-            showStickerArea(false, 0);
-        }
-    }
-
-    function showTextArea(request: boolean, textIndex: number, input: string) {
-        setText(input);
-        setTextIndex(textIndex);
-        setTextArea(request);
-    }
-
-    function changeTextInput(e: any) {
-        setText(e.target.value);
-        if (cardSide === "Front") {
-            setFrontCards(prev =>
-                prev.map((card, index) =>
-                    index === (cardNum - 1) ? {...card, text: card.text.map((cardText, i) =>
-                        i === textIndex ? {...cardText, input: e.target.value} : cardText
-                    )} : card
-                )
-            );
-        } else if (cardSide == "Back") {
-            setBackCards(prev =>
-                prev.map((card, index) =>
-                    index === (cardNum - 1) ? {...card, text: card.text.map((cardText, i) =>
-                        i === textIndex ? {...cardText, input: e.target.value} : cardText
-                    )} : card
-                )
-            );
-        }
-    }
-
-    /*
-    function addCard() {
-        if ((total + 1) <= 20) {
-            setTotal(total + 1);
-            setFrontCards([...frontCards, { id: null, deck_id: deckId, text: [], gif: [], sticker: []}]);
-            setBackCards([...backCards, {text: [], gif: [], sticker: []}]);
-        }
-    }*/
-
-    function deleteCard() {
-        if ((total - 1) >= 1) {
-            setTotal(total - 1);
-            setFrontCards(prev => prev.filter((_, index) => index != (cardNum - 1)));
-            setBackCards(prev => prev.filter((_, index) => index != (cardNum - 1)));
-            if (cardNum > 1) {
-                setCardNum(cardNum - 1);
-            } else {
-                setCardNum(1);
-            }
-        }
-    }
-
-    function flipCard() {
-        if (cardRef.current) {
-            cardRef.current.classList.toggle(styles.flip);
-            setCardSide(prev => (prev === "Front") ? "Back" : "Front");
-        }
-    }
-
-    function showNextCard() {
-        if ((cardNum + 1) <= total) {
-            showTextArea(false, 0, "");
-            setCardNum(cardNum + 1);
-            if (cardSide === "Back") {
-                flipCard();
-            }
-        }
-    }
-
-    function showPrevCard() {
-        if ((cardNum - 1) >= 1) {
-            showTextArea(false, 0, "");
-            setCardNum(cardNum - 1);
-            if (cardSide === "Back") {
-                flipCard();
-            }
-        }
-    }
-
-    function showTextPanel() {
-        if (stickerPanel) {
-            setStickerPanel(false);
-            showStickerArea(false, 0);
-        } else if (gifPanel) {
-            setGifPanel(false);
-            showGiphArea(false, 0);
-        }
-        setTextPanel(true);
-    }
-
-    function showGifPanel() {
-        if (textPanel) {
-            setTextArea(false);
-            setTextPanel(false);
-        } else if (stickerPanel) {
-            setStickerPanel(false);
-            showStickerArea(false, 0);
-        }
-        setGifPanel(true);
-    }
-
-    function showStickerPanel() {
-        if (textPanel) {
-            setTextArea(false);
-            setTextPanel(false);
-        } else if (gifPanel) {
-            setGifPanel(false);
-            showGiphArea(false, 0);
-        }
-        setStickerPanel(true);
-    }
-
-    function showGiphArea(request: boolean, giphIndex: number) {
-        setGiphSelected(request);
-        setGifIndex(giphIndex);
-    }
-
-    function showStickerArea(request: boolean, stickerIndex: number) {
-        setStickerSelected(request);
-        setStickerIndex(stickerIndex);
-    }
-
-    function hideSidePanel() {
-        if (textPanel) {
-            setTextPanel(false);
-            showTextArea(false, 0, "");
-        } else if (stickerPanel) {
-            setStickerPanel(false);
-            showStickerArea(false, 0);
-        } else if (gifPanel) {
-            setGifPanel(false);
-            showGiphArea(false, 0);
-        }
-    }
+    // text related variables
+    const [textTools, setTextTools] = useState(false);
+    const [text, setText] = useState("");
+    const [textIndex, setTextIndex] = useState<number | null>();
     
-    const updateDeckContent  = async () => {
-        setLoading(true);
+    // gif related variables
+    const [giphyQuery, setGiphyQuery] = useState("");
+    const [gifTools, setGifTools] = useState(false);
+    const [gifResults, setGifResults] = useState<Giphy[] | null>([]);
+    const [gifIndex, setGifIndex] = useState<number | null>();
 
-        try {
-            /*
-            // update card content in mongodb
-            const docResponse = await fetch(`${import.meta.env.VITE_API_URL}/user/${userId}/deck/${deckId}/saveCards`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
-                },
-                body: JSON.stringify({
-                    "userId": userId,
-                    "deckId": deckId,
-                    "frontCards": frontCards,
-                    "backCards": backCards
-                })
-            });
-
-            // get message and card content
-            const docData = await docResponse.json();
-
-            if (!docResponse.ok) {
-                throw new Error(docData.message);
-            }*/
-
-        } catch(error: any) {
-            setError({ status: true, message: error.message });
-
-        } finally {
-            setLoading(false);
-        }
-        
-    }
+    // sticker realted tools
+    const [stickerTools, setStickerTools] = useState(false);
+    const [stickerResults, setStickerResults] = useState<Giphy[] | null>([]);
+    const [stickerIndex, setStickerIndex] = useState<number | null>();
 
     const fetchDeckName = async () => {
         setLoading(true);
@@ -546,24 +146,14 @@ function Edit() {
                     "Authorization": `Bearer ${session.access_token}`
                 },
                 body: JSON.stringify({
-                    front_card: {
-                        id: null,
-                        deck_id: deckId,
-                        card_num: 1,
-                        card_side: "front"
-                    },
-                    back_card: {
-                        id: null,
-                        deck_id: deckId,
-                        card_num: 1,
-                        card_side: "back"
-                    }
+                    frontCards,
+                    backCards
                 })
             });
 
             const data = await response.json();
             if (!response.ok) throw new Error(data.message);
-            console.log(data);
+            fetchDeckContent();
 
         } catch(error: any) {
             setError({ status: true, message: error.message });
@@ -573,9 +163,329 @@ function Edit() {
         }
     };
 
+    const fetchGiphs = async (e: any) => {
+        e.preventDefault();
+        setLoading(true);
+        
+        try {
+            const response = await fetch(`https://api.giphy.com/v1/gifs/search?api_key=${import.meta.env.VITE_GIPHY_API_KEY}&q=${giphyQuery.trim()}&limit=12&rating=g`);
+            const data = await response.json();
+            if (!response.ok) throw new Error(data.message);
+
+            const gifs = data.data.map((item: any) => ({
+                id: item.id,
+                title: item.title,
+                url: item.images.original.url
+            }));
+
+            setGifResults(gifs);
+
+        } catch(error: any) {
+            setError({ status: true, message: error.message });
+        
+        } finally {
+            setGiphyQuery("");
+            setLoading(false);
+        }
+    }
+
+    const fetchStickers = async (e: any) =>  {
+        e.preventDefault();
+        setLoading(true);
+
+        try {
+            const response = await fetch(`https://api.giphy.com/v1/stickers/search?api_key=${import.meta.env.VITE_GIPHY_API_KEY}&q=${giphyQuery.trim()}&limit=12&rating=g`);
+            const data = await response.json();
+            if (!response.ok) throw new Error(data.message);
+
+            const stickers = data.data.map((item: any) => ({
+                id: item.id,
+                title: item.title,
+                url: item.images.original_still.url
+            }));
+
+            setStickerResults(stickers);
+
+        } catch(error: any) {
+            setError({ status: true, message: error.message });
+
+        } finally {
+            setGiphyQuery("");
+            setLoading(false);
+        }
+    }
+
+    function createCard() {
+        if ((total + 1) <= 20) {
+            setTotal(total + 1);
+            setFrontCards([...frontCards, {id: null, deck_id: Number(deckId), card_num: (total + 1), card_side: "front", text: [], gif: [], sticker: []}]);
+            setBackCards([...backCards, {id: null, deck_id: Number(deckId), card_num: (total + 1), card_side: "back", text: [], gif: [], sticker: []}]);
+        } else {
+            setError({ status: true, message: "You can only create up to 20 cards in a deck." });
+        }
+    }
+
+    function flipCard() {
+        if (cardRef.current) {
+            cardRef.current.classList.toggle(styles.flip);
+            setCardSide(prev => (prev === "Front") ? "Back" : "Front");
+        }
+    }
+
+    function showNextCard() {
+        if ((cardNum + 1) <= total) {
+            showTextTools(false, null, "");
+            setCardNum(cardNum + 1);
+            if (cardSide === "Back") {
+                flipCard();
+            }
+        }
+    }
+
+    function showPrevCard() {
+        if ((cardNum - 1) >= 1) {
+            showTextTools(false, null, "");
+            setCardNum(cardNum - 1);
+            if (cardSide === "Back") {
+                flipCard();
+            }
+        }
+    }
+
+    function updateCardNumbers() {
+        setFrontCards(prevCards =>
+            prevCards.map((card, index) => (
+                {...card, card_num: (index + 1)}
+            ))
+        );
+        setBackCards(prevCards =>
+            prevCards.map((card, index) => (
+                {...card, card_num: (index + 1)}
+            ))
+        );
+    }
+
+    function deleteCard() {
+        if ((total - 1) >= 1) {
+            setTotal(total - 1);
+            setFrontCards(prev => prev.filter((_, index) => index != (cardNum - 1)));
+            setBackCards(prev => prev.filter((_, index) => index != (cardNum - 1)));
+            updateCardNumbers();
+            if (cardNum > 1) {
+                setCardNum(cardNum - 1);
+            } else {
+                setCardNum(1);
+            }
+        }
+    }
+
+    function showSidePanel(panel: string) {
+        // close any open side panels first
+        closeSidePanel();
+
+        if (panel === "text") {
+            setTextPanel(true);
+        } else if (panel === "gif") {
+            setGifPanel(true);
+        } else if (panel === "sticker") {
+            setStickerPanel(true);
+        }
+    }
+
+    function closeSidePanel() {
+        if (textPanel) {
+            setTextPanel(false);
+            showTextTools(false, null, "");
+        } else if (gifPanel) {
+            setGifPanel(false);
+            showGifTools(false, null, null);
+        } else if (stickerPanel) {
+            setStickerPanel(false);
+            showStickerTools(false, null, null);
+        }
+    }
+
+    function createText(fontSize: number) {
+        if (cardSide === "Front") {
+            let tmp = {id: null, card_id: frontCards[cardNum - 1].id, input: "Double click to edit text", width: 300, x: 30, y: 30, font_size: fontSize, color: "#201002"};
+            setFrontCards(prevCards =>
+                prevCards.map((card, index) =>
+                    index === (cardNum - 1) ? {...card, text: [...card.text, tmp]} : card
+                )
+            );
+        } else if (cardSide === "Back") {
+            let tmp = {id: null, card_id: backCards[cardNum - 1].id, input: "Double click to edit text", width: 300, x: 30, y: 30, font_size: fontSize, color: "#201002"};
+            setBackCards(prevCards =>
+                prevCards.map((card, index) =>
+                    index === (cardNum - 1) ? {...card, text: [...card.text, tmp]} : card
+                )
+            );
+        }
+    }
+
+    function showTextTools(request: boolean, textIndex: number | null, input: string) {
+        setText(input);
+        setTextIndex(textIndex);
+        setTextTools(request); 
+    }
+
+    function changeTextColor(newColor: string) {
+        if (cardSide === "Front") {
+            setFrontCards(prevCards =>
+                prevCards.map((card, index) =>
+                    index === (cardNum - 1) ? {...card, text: card.text.map((cardText, i) =>
+                        i === textIndex ? {...cardText, color: newColor} : cardText
+                    )} : card
+                )
+            );
+        } else if (cardSide == "Back") {
+            setBackCards(prevCards =>
+                prevCards.map((card, index) =>
+                    index === (cardNum - 1) ? {...card, text: card.text.map((cardText, i) =>
+                        i === textIndex ? {...cardText, color: newColor} : cardText
+                    )} : card
+                )
+            );
+        }
+    }
+
+    function changeTextInput(e: any) {
+        setText(e.target.value);
+        if (cardSide === "Front") {
+            setFrontCards(prevCards =>
+                prevCards.map((card, index) =>
+                    index === (cardNum - 1) ? {...card, text: card.text.map((cardText, i) =>
+                        i === textIndex ? {...cardText, input: e.target.value} : cardText
+                    )} : card
+                )
+            );
+        } else if (cardSide == "Back") {
+            setBackCards(prevCards =>
+                prevCards.map((card, index) =>
+                    index === (cardNum - 1) ? {...card, text: card.text.map((cardText, i) =>
+                        i === textIndex ? {...cardText, input: e.target.value} : cardText
+                    )} : card
+                )
+            );
+        }
+    }
+
+    function deleteText() {
+        if (cardSide === "Front") {
+            setFrontCards(prevCards =>
+                prevCards.map((card, index) =>
+                    index === (cardNum - 1) ? {...card, text: card.text.filter((_, index) =>
+                        index != textIndex
+                    )} : card
+                )
+            );
+        } else if (cardSide == "Back") {
+            setBackCards(prevCards =>
+                prevCards.map((card, index) =>
+                    index === (cardNum - 1) ? {...card, text: card.text.filter((_, index) =>
+                        index != textIndex
+                    )} : card
+                )
+            );
+        }
+        showTextTools(false, null, "");
+    }
+
+    function showGifTools(request: boolean, gifIndex: number | null, gifResults: Giphy[] | null) {
+        setGiphyQuery("");
+        setGifIndex(gifIndex);
+        setGifTools(request);
+        setGifResults(gifResults);
+    }
+
+    function createGif(gifUrl: string) {
+        if (cardSide == "Front") {
+            let tmp = {id: null, card_id: frontCards[cardNum - 1].id, url: gifUrl, width: 120, height: 120, x: 50, y: 50};
+            setFrontCards(prevCards =>
+                prevCards.map((card, index) =>
+                    index === (cardNum - 1) ? {...card, gif: [...card.gif, tmp]} : card
+                )
+            );
+        } else if (cardSide === "Back") {
+            let tmp = {id: null, card_id: frontCards[cardNum - 1].id, url: gifUrl, width: 120, height: 120, x: 50, y: 50};
+            setBackCards(prevCards =>
+                prevCards.map((card, index) =>
+                    index === (cardNum - 1) ? {...card, gif: [...card.gif, tmp]} : card
+                )
+            );
+        }
+    }
+
+    function showStickerTools(request: boolean, stickerIndex: number | null, stickerResults: Giphy[] | null) {
+        setGiphyQuery("");
+        setStickerIndex(stickerIndex);
+        setStickerTools(request);
+        setStickerResults(stickerResults);
+    }
+
+    function deleteGif() {
+        if (cardSide === "Front") {
+            setFrontCards(prevCards =>
+                prevCards.map((card, index) =>
+                    index === (cardNum - 1) ? {...card, gif: card.gif.filter((_, index) =>
+                        index != gifIndex
+                    )} : card
+                )
+            );
+        } else if (cardSide == "Back") {
+            setBackCards(prevCards =>
+                prevCards.map((card, index) =>
+                    index === (cardNum - 1) ? {...card, gif: card.gif.filter((_, index) =>
+                        index != gifIndex
+                    )} : card
+                )
+            );
+        }
+        showGifTools(false, null, gifResults);
+    }
+
+    function createSticker(stickerUrl: string) {
+        if (cardSide == "Front") {
+            let tmp = {id: null, card_id: frontCards[cardNum - 1].id, url: stickerUrl, width: 120, height: 120, x: 50, y: 50};
+            setFrontCards(prevCards =>
+                prevCards.map((card, index) =>
+                    index === (cardNum - 1) ? {...card, sticker: [...card.sticker, tmp]} : card
+                )
+            );
+        } else if (cardSide === "Back") {
+            let tmp = {id: null, card_id: backCards[cardNum - 1].id, url: stickerUrl, width: 120, height: 120, x: 50, y: 50};
+            setBackCards(prevCards =>
+                prevCards.map((card, index) =>
+                    index === (cardNum - 1) ? {...card, sticker: [...card.sticker, tmp]} : card
+                )
+            );
+        }
+    }
+
+    function deleteSticker() {
+        if (cardSide === "Front") {
+            setFrontCards(prevCards =>
+                prevCards.map((card, index) =>
+                    index === (cardNum - 1) ? {...card, sticker: card.sticker.filter((_, index) =>
+                        index != stickerIndex
+                    )} : card
+                )
+            );
+        } else if (cardSide == "Back") {
+            setBackCards(prevCards =>
+                prevCards.map((card, index) =>
+                    index === (cardNum - 1) ? {...card, sticker: card.sticker.filter((_, index) =>
+                        index != stickerIndex
+                    )} : card
+                )
+            );
+        }
+        showStickerTools(false, null, stickerResults);
+    }
+
     useEffect(() => {
-        //fetchDeckName();
-        //fetchDeckContent();
+        fetchDeckName();
+        fetchDeckContent();
     }, []);
 
     return (
@@ -598,7 +508,7 @@ function Edit() {
                         <button
                             type="button"
                             className={styles.toolOption}
-                            //onClick={addCard}
+                            onClick={createCard}
                         >
                             <span className={styles.shadow}></span>
                             <span className={styles.edge}></span>
@@ -611,7 +521,7 @@ function Edit() {
                         <button
                             type="button"
                             className={styles.toolOption}
-                            onClick={showTextPanel}
+                            onClick={() => showSidePanel("text")}
                         >
                             <span className={styles.shadow}></span>
                             <span className={styles.edge}></span>
@@ -624,7 +534,7 @@ function Edit() {
                         <button
                             type="button"
                             className={styles.toolOption}
-                            onClick={showGifPanel}
+                            onClick={() => showSidePanel("gif")}
                         >
                             <span className={styles.shadow}></span>
                             <span className={styles.edge}></span>
@@ -637,7 +547,7 @@ function Edit() {
                         <button
                             type="button"
                             className={styles.toolOption}
-                            onClick={showStickerPanel}
+                            onClick={() => showSidePanel("sticker")}
                         >
                             <span className={styles.shadow}></span>
                             <span className={styles.edge}></span>
@@ -676,7 +586,7 @@ function Edit() {
                         <button
                             type="button"
                             className={styles.toolOption} 
-                            onClick={() => updateDeckContent()}                       
+                            onClick={saveDeckContent}                       
                         >
                             <span className={styles.shadow}></span>
                             <span className={styles.edge}></span>
@@ -689,7 +599,7 @@ function Edit() {
                         <button
                             type="button"
                             className={styles.toolOption}
-                            onClick={hideSidePanel}
+                            onClick={closeSidePanel}
                         >
                             <span className={styles.shadow}></span>
                             <span className={styles.edge}></span>
@@ -699,23 +609,22 @@ function Edit() {
                         </button>
                     </Tooltip>
                 </div>
-                <div className={styles.panel}>
+                <div className={styles.mainPanel}>
                     <div className={styles.deck}>
                         <div className={styles.card} ref={cardRef}>
                             <div className={styles.cardInner}>
                                 <div className={styles.cardFront}>
-                                    {/*
                                     <Stage
                                         width={800}
                                         height={400}
                                         onClick={(e) => {
                                             if (e.target === e.target.getStage()) {
-                                                showTextArea(false, 0, "");
+                                                showTextTools(false, null, "");
                                             }
                                         }}
                                     >
                                         <Layer>
-                                            {frontCards[cardNum - 1].text.map((text, textIndex) =>
+                                            {frontCards[cardNum - 1]?.text?.map((text, textIndex) =>
                                                 <Text
                                                     key={textIndex}
                                                     x={text.x}
@@ -723,17 +632,17 @@ function Edit() {
                                                     width={text.width}
                                                     text={text.input}
                                                     fontFamily="Imprima"
-                                                    //fontSize={text.fontSize}
+                                                    fontSize={text.font_size}
                                                     fill={text.color}
                                                     draggable
                                                     onDblClick={() => {
-                                                        showTextPanel();
-                                                        showTextArea(true, textIndex, text.input);
+                                                        showSidePanel("text");
+                                                        showTextTools(true, textIndex, text.input);
                                                     }}
                                                     onDragEnd={(e) => {
                                                         const { x, y } = e.target.position();
-                                                        setFrontCards(prev =>
-                                                            prev.map((card, cardIndex) =>
+                                                        setFrontCards(prevCards =>
+                                                            prevCards.map((card, cardIndex) =>
                                                                 cardIndex === (cardNum - 1) ? {
                                                                     ...card,
                                                                     text: card.text.map((tmp, i) =>
@@ -745,41 +654,18 @@ function Edit() {
                                                     }}
                                                 />
                                             )}
-                                            {frontCards[cardNum - 1].sticker.map((sticker, stickerIndex) =>
-                                                <Giphy
-                                                    key={stickerIndex}
-                                                    newImage={sticker}
-                                                    onDblClick={() => {
-                                                        showStickerPanel();
-                                                        showStickerArea(true, stickerIndex);
-                                                    }}
-                                                    onDragEnd={(e: any) => {
-                                                        const { x, y } = e.target.position();
-                                                        setFrontCards(prev =>
-                                                            prev.map((card, cardIndex) =>
-                                                                cardIndex === (cardNum - 1) ? {
-                                                                    ...card,
-                                                                    sticker: card.sticker.map((tmp, i) =>
-                                                                        i === stickerIndex ? {...tmp, x: x, y: y} : tmp
-                                                                    )
-                                                                } : card
-                                                            )
-                                                        );
-                                                    }}
-                                                />
-                                            )}
-                                            {frontCards[cardNum - 1].gif.map((gif, gifIndex) =>
+                                            {frontCards[cardNum - 1]?.gif?.map((gif, gifIndex) =>
                                                 <Giphy
                                                     key={gifIndex}
                                                     newImage={gif}
                                                     onDblClick={() => {
-                                                        showGifPanel();
-                                                        showGiphArea(true, gifIndex);
+                                                        showSidePanel("gif");
+                                                        showGifTools(true, gifIndex, gifResults);
                                                     }}
                                                     onDragEnd={(e: any) => {
                                                         const { x, y } = e.target.position();
-                                                        setFrontCards(prev =>
-                                                            prev.map((card, cardIndex) =>
+                                                        setFrontCards(prevCards =>
+                                                            prevCards.map((card, cardIndex) =>
                                                                 cardIndex === (cardNum - 1) ? {
                                                                     ...card,
                                                                     gif: card.gif.map((tmp, i) =>
@@ -791,23 +677,44 @@ function Edit() {
                                                     }}
                                                 />
                                             )}
+                                            {frontCards[cardNum - 1]?.sticker?.map((sticker, stickerIndex) =>
+                                                <Giphy
+                                                    key={stickerIndex}
+                                                    newImage={sticker}
+                                                    onDblClick={() => {
+                                                        showSidePanel("sticker");
+                                                        showStickerTools(true, stickerIndex, stickerResults);
+                                                    }}
+                                                    onDragEnd={(e: any) => {
+                                                        const { x, y } = e.target.position();
+                                                        setFrontCards(prevCards =>
+                                                            prevCards.map((card, cardIndex) =>
+                                                                cardIndex === (cardNum - 1) ? {
+                                                                    ...card,
+                                                                    sticker: card.sticker.map((tmp, i) =>
+                                                                        i === stickerIndex ? {...tmp, x: x, y: y} : tmp
+                                                                    )
+                                                                } : card
+                                                            )
+                                                        );
+                                                    }}
+                                                />
+                                            )}
                                         </Layer>
-                                        
-                                    </Stage>    */}                                 
+                                    </Stage>
                                 </div>
                                 <div className={styles.cardBack}>
-                                     {/*
                                     <Stage
                                         width={800}
                                         height={400}
                                         onClick={(e) => {
                                             if (e.target === e.target.getStage()) {
-                                                showTextArea(false, 0, "");
+                                                showTextTools(false, null, "");
                                             }
                                         }}
                                     >
                                         <Layer>
-                                            {backCards[cardNum - 1].text.map((text, textIndex) =>
+                                            {backCards[cardNum - 1]?.text?.map((text, textIndex) =>
                                                 <Text
                                                     key={textIndex}
                                                     x={text.x}
@@ -815,17 +722,17 @@ function Edit() {
                                                     width={text.width}
                                                     text={text.input}
                                                     fontFamily="Imprima"
-                                                    //fontSize={text.fontSize}
+                                                    fontSize={text.font_size}
                                                     fill={text.color}
                                                     draggable
                                                     onDblClick={() => {
-                                                        showTextPanel();
-                                                        showTextArea(true, textIndex, text.input);
+                                                        showSidePanel("text");
+                                                        showTextTools(true, textIndex, text.input);
                                                     }}
                                                     onDragEnd={(e) => {
                                                         const { x, y } = e.target.position();
-                                                        setBackCards(prev =>
-                                                            prev.map((card, cardIndex) =>
+                                                        setBackCards(prevCards =>
+                                                            prevCards.map((card, cardIndex) =>
                                                                 cardIndex === (cardNum - 1) ? {
                                                                     ...card,
                                                                     text: card.text.map((tmp, i) =>
@@ -837,41 +744,18 @@ function Edit() {
                                                     }}
                                                 />
                                             )}
-                                            {backCards[cardNum - 1].sticker.map((sticker, stickerIndex) =>
-                                                <Giphy
-                                                    key={stickerIndex}
-                                                    newImage={sticker}
-                                                    onDblClick={() => {
-                                                        showStickerPanel();
-                                                        showStickerArea(true, stickerIndex);
-                                                    }}
-                                                    onDragEnd={(e: any) => {
-                                                        const { x, y } = e.target.position();
-                                                        setBackCards(prev =>
-                                                            prev.map((card, cardIndex) =>
-                                                                cardIndex === (cardNum - 1) ? {
-                                                                    ...card,
-                                                                    sticker: card.sticker.map((tmp, i) =>
-                                                                        i === stickerIndex ? {...tmp, x: x, y: y} : tmp
-                                                                    )
-                                                                } : card
-                                                            )
-                                                        );
-                                                    }}
-                                                />
-                                            )}
-                                            {backCards[cardNum - 1].gif.map((gif, gifIndex) =>
+                                            {backCards[cardNum - 1]?.gif?.map((gif, gifIndex) =>
                                                 <Giphy
                                                     key={gifIndex}
                                                     newImage={gif}
                                                     onDblClick={() => {
-                                                        showStickerPanel();
-                                                        showStickerArea(true, gifIndex);
+                                                        showSidePanel("gif");
+                                                        showGifTools(true, gifIndex, gifResults);
                                                     }}
                                                     onDragEnd={(e: any) => {
                                                         const { x, y } = e.target.position();
-                                                        setBackCards(prev =>
-                                                            prev.map((card, cardIndex) =>
+                                                        setBackCards(prevCards =>
+                                                            prevCards.map((card, cardIndex) =>
                                                                 cardIndex === (cardNum - 1) ? {
                                                                     ...card,
                                                                     gif: card.gif.map((tmp, i) =>
@@ -883,8 +767,31 @@ function Edit() {
                                                     }}
                                                 />
                                             )}
+                                            {backCards[cardNum - 1]?.sticker?.map((sticker, stickerIndex) =>
+                                                <Giphy
+                                                    key={stickerIndex}
+                                                    newImage={sticker}
+                                                    onDblClick={() => {
+                                                        showSidePanel("sticker");
+                                                        showStickerTools(true, stickerIndex, stickerResults);
+                                                    }}
+                                                    onDragEnd={(e: any) => {
+                                                        const { x, y } = e.target.position();
+                                                        setBackCards(prevCards =>
+                                                            prevCards.map((card, cardIndex) =>
+                                                                cardIndex === (cardNum - 1) ? {
+                                                                    ...card,
+                                                                    sticker: card.sticker.map((tmp, i) =>
+                                                                        i === stickerIndex ? {...tmp, x: x, y: y} : tmp
+                                                                    )
+                                                                } : card
+                                                            )
+                                                        );
+                                                    }}
+                                                />
+                                            )}
                                         </Layer>
-                                    </Stage>      */}                       
+                                    </Stage>
                                 </div>
                             </div>
                         </div>
@@ -898,66 +805,65 @@ function Edit() {
                             </button>
                         </div>
                     </div>
-                    <div className={styles.sidePanel} style={{display: textPanel ? "flex" : "none"}}>
-                        <div style={{display: (textArea) ? "flex" : "none"}}>
+                    <div className={styles.sidePanel} style={{ display: textPanel ? "flex" : "none" }}>
+                        <div style={{ display: (textTools) ? "flex" : "none" }}>
                             <div className={styles.sidePanelTitle}>Text Input</div>
                             <div className={styles.textInput}>
                                 <textarea placeholder="Enter text here" value={text} onChange={changeTextInput} />
                             </div>
                         </div>
-                        <div style={{display: (textArea) ? "flex" : "none"}}>
+                        <div style={{ display: (textTools) ? "flex" : "none" }}>
                             <div className={styles.sidePanelTitle}>Text Deletion</div>
-                            <div className={styles.textOptions}>
-                                <button onClick={deleteText}>Delete</button>
+                            <div className={styles.sidePanelOptions}>
+                                <button className={styles.sidePanelBtn} onClick={deleteText}>Delete</button>
                             </div>
                         </div>
-                        <div style={{display: (textArea) ? "flex" : "none"}}>
+                        <div style={{ display: (textTools) ? "flex" : "none" }}>
                             <div className={styles.sidePanelTitle}>Text Color</div>
-                            <div className={styles.textOptions}>
-                                <div style={{backgroundColor: "#201002"}} onClick={() => changeTextColor("#201002")}></div>
-                                <div style={{backgroundColor: "#FF2511"}} onClick={() => changeTextColor("#FF2511")}></div>
-                                <div style={{backgroundColor: "#FED43F"}} onClick={() => changeTextColor("#FED43F")}></div>
-                                <div style={{backgroundColor: "#016236"}} onClick={() => changeTextColor("#016236")}></div>
-                                <div style={{backgroundColor: "#E43480"}} onClick={() => changeTextColor("#E43480")}></div>
-                                <div style={{backgroundColor: "#621590"}} onClick={() => changeTextColor("#621590")}></div>
-                                <div style={{backgroundColor: "#1F6CB0"}} onClick={() => changeTextColor("#1F6CB0")}></div>
+                            <div className={styles.sidePanelOptions}>
+                                <div style={{ backgroundColor: "#201002" }} onClick={() => changeTextColor("#201002")}></div>
+                                <div style={{ backgroundColor: "#FF2511" }} onClick={() => changeTextColor("#FF2511")}></div>
+                                <div style={{ backgroundColor: "#FED43F" }} onClick={() => changeTextColor("#FED43F")}></div>
+                                <div style={{ backgroundColor: "#016236" }} onClick={() => changeTextColor("#016236")}></div>
+                                <div style={{ backgroundColor: "#E43480" }} onClick={() => changeTextColor("#E43480")}></div>
+                                <div style={{ backgroundColor: "#621590" }} onClick={() => changeTextColor("#621590")}></div>
+                                <div style={{ backgroundColor: "#1F6CB0" }} onClick={() => changeTextColor("#1F6CB0")}></div>
                             </div>
                         </div>
                         <div>
                             <div className={styles.sidePanelTitle}>Text Size</div>
-                            {/* 
-                            <div className={styles.textOptions}>
-                                <button onClick={createSmallText}>Small</button>
-                                <button onClick={createMediumText}>Medium</button>
-                                <button onClick={createLargeText}>Large</button>
-                            </div>*/}
+                            <div className={styles.sidePanelOptions} style={{ marginBottom: "0rem" }}>
+                                <button className={styles.sidePanelBtn} onClick={() => createText(18)}>Small</button>
+                                <button className={styles.sidePanelBtn} onClick={() => createText(28)}>Medium</button>
+                                <button className={styles.sidePanelBtn} onClick={() => createText(38)}>Large</button>
+                            </div>
                         </div>
                     </div>
-                    <div className={styles.sidePanel} style={{display: gifPanel ? "flex" : "none"}}>
-                        <div style={{display: (giphSelected) ? "flex" : "none"}}>
+                    <div className={styles.sidePanel} style={{ display: gifPanel ? "flex" : "none" }}>
+                        <div style={{ display: (gifTools) ? "flex" : "none" }}>
                             <div className={styles.sidePanelTitle}>Giph Deletion</div>
-                            <div className={styles.textOptions}>
-                                <button onClick={() => deleteGiphy("gif")}>Delete</button>
+                            <div className={styles.sidePanelOptions}>
+                                <button className={styles.sidePanelBtn} onClick={deleteGif}>Delete</button>
                             </div>
                         </div>
                         <div>
                             <div className={styles.sidePanelTitle}>Gifs</div>
-                            <form onSubmit={fetchGiphs} className={styles.mediaForm}>
+                            <form onSubmit={fetchGiphs} className={styles.sidePanelOptions}>
                                 <input
                                     type="text"
                                     placeholder="Search for gifs"
-                                    value={query}
-                                    onChange={(e) => setQuery(e.target.value)}
+                                    value={giphyQuery}
+                                    onChange={(e) => setGiphyQuery(e.target.value)}
                                 />
-                                <button type="submit" className={styles.mediaFormBtn}>Search</button>
+                                <button type="submit" className={styles.sidePanelFormBtn}>Search</button>
                             </form>
-                            <div className={styles.mediaGrid}>
-                                {gifResults.map((gif) => (
+                            <div className={styles.giphyGrid}>
+                                {gifResults?.map((gif) => (
                                     <img
                                         key={gif.id}
                                         src={gif.url}
                                         alt={gif.title}
-                                        //onClick={() => createGif(gif.url)}
+                                        onClick={() => createGif(gif.url)}
                                     />
                                 ))}
                             </div>
@@ -966,31 +872,31 @@ function Edit() {
                             </div>
                         </div>
                     </div>
-                    <div className={styles.sidePanel} style={{display: stickerPanel ? "flex" : "none"}}>
-                        <div style={{display: (stickerSelected) ? "flex" : "none"}}>
+                    <div className={styles.sidePanel} style={{ display: stickerPanel ? "flex" : "none" }}>
+                        <div style={{ display: (stickerTools) ? "flex" : "none" }}>
                             <div className={styles.sidePanelTitle}>Sticker Deletion</div>
-                            <div className={styles.textOptions}>
-                                <button onClick={() => deleteGiphy("sticker")}>Delete</button>
+                            <div className={styles.sidePanelOptions}>
+                                <button className={styles.sidePanelBtn} onClick={deleteSticker}>Delete</button>
                             </div>
                         </div>
                         <div>
                             <div className={styles.sidePanelTitle}>Stickers</div>
-                            <form onSubmit={fetchStickers} className={styles.mediaForm}>
+                            <form onSubmit={fetchStickers} className={styles.sidePanelOptions}>
                                 <input
                                     type="text"
                                     placeholder="Search for stickers"
-                                    value={query}
-                                    onChange={(e) => setQuery(e.target.value)}
+                                    value={giphyQuery}
+                                    onChange={(e) => setGiphyQuery(e.target.value)}
                                 />
-                                <button type="submit" className={styles.mediaFormBtn}>Search</button>
+                                <button type="submit" className={styles.sidePanelFormBtn}>Search</button>
                             </form>
-                            <div className={styles.mediaGrid}>
-                                {stickerResults.map((sticker) => (
+                            <div className={styles.giphyGrid}>
+                                {stickerResults?.map((sticker) => (
                                     <img
                                         key={sticker.id}
                                         src={sticker.url}
                                         alt={sticker.title}
-                                        //onClick={() => createSticker(sticker.url)}
+                                        onClick={() => createSticker(sticker.url)}
                                     />
                                 ))}
                             </div>
