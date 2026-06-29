@@ -46,12 +46,8 @@ function ChangePassword() {
                 throw new Error("New password and Confirm new password do not match.");
             }
 
-            const result = await changePassword(formData.currentPassword, formData.newPassword);
-
-            if (!result.success) {
-                throw new Error(result.error.message);
-            }
-
+            const result = await changePassword(formData.newPassword, formData.currentPassword);
+            if (!result.success) throw new Error(result.error.message);
             throw new Error("Your password was successfully updated.");
 
         } catch(error: any) {

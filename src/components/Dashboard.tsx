@@ -125,6 +125,7 @@ function Dashboard() {
             if (!response.ok) throw new Error(data.message);
             setDecks(prev => [...prev, data[0]]);
             createNewDeckContent(data[0].id);
+            setError({ status: false, message: "" });
 
         } catch(error: any) {
             setError({ status: true, message: error.message });
@@ -167,6 +168,8 @@ function Dashboard() {
                     deck.id === data[0].id ? data[0] : deck
                 )
             );
+
+            setError({ status: false, message: "" });
             
         } catch(error: any) {
             setError({ status: true, message: error.message });
