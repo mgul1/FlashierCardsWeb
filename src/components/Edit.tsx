@@ -146,14 +146,14 @@ function Edit() {
                     "Authorization": `Bearer ${session.access_token}`
                 },
                 body: JSON.stringify({
-                    frontCards,
-                    backCards
+                    front_cards: frontCards,
+                    back_cards: backCards
                 })
             });
 
             const data = await response.json();
             if (!response.ok) throw new Error(data.message);
-            fetchDeckContent();
+            //fetchDeckContent();
 
         } catch(error: any) {
             setError({ status: true, message: error.message });

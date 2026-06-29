@@ -285,27 +285,25 @@
 
 /* css for study animations below */
 
-.background {
-    position: absolute;
-    inset: 0;
+.animationBackground {
+    position: fixed;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     pointer-events: none;
-    z-index: 0;
 }
 
-@keyframes slideRight {
-    from { background-position: 0 0; }
-    to { background-position: 180px 0; }
-}
-
-.animationOne {
+.dotAnimation {
     background-image: 
         radial-gradient(circle, rgba(0, 74, 148, 0.12) 10%, transparent 10%);
     background-size: 60px 60px;
     animation: slideRight 6s linear infinite;
-    
 }
 
-.animationTwo {
+.diamondAnimation {
     background-image:
         linear-gradient(45deg, rgba(0, 74, 148, 0.12) 25%, transparent 25%),
         linear-gradient(-45deg, rgba(0, 74, 148, 0.12) 25%, transparent 25%),
@@ -315,10 +313,7 @@
     animation: slideRight 6s linear infinite;
 }
 
-.main {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    height: 100%;
-    overflow: hidden;
+@keyframes slideRight {
+    from { background-position: 0 0; }
+    to { background-position: 180px 0; }
 }
